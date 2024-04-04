@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.pyz
+*.pyc
+
+# Poetry
+/poetry.lock
+/pyproject.toml
+
+# Virtualenv
+*.venv
+.venv/
+venv/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# OS
+.DS_Store
+Thumbs.db

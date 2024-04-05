@@ -69,6 +69,9 @@ hourly_data = {
 hourly_dataframe = pd.DataFrame(data = hourly_data)
 print(hourly_dataframe)
 
+# Drop rows with NaN values
+hourly_dataframe = hourly_dataframe.dropna()
+
 logging.info("Starting DB write")
 
 # Create a connection to the database
@@ -80,13 +83,12 @@ db = mysql.connector.connect(
 )
 logging.info("Connected to database")
 cursor = db.cursor()
-# Assuming your hourly_data dictionary looks like this:
-# hourly_data = {"temperature_2m": 20, "relative_humidity_2m": 50, "rain": 10, "snowfall": 0}
-
-# Insert the data into the database
-insert_query = "INSERT INTO yourtable (temperature_2m, relative_humidity_2m, rain, snowfall) VALUES (%s, %s, %s, %s)"
-values = (hourly_data["temperature_2m"], hourly_data["relative_humidity_2m"], hourly_data["rain"], hourly_data["snowfall"])
-cursor.execute(insert_query, values)
+# Assuming your DataFrame is named df
+for index, row in hourly_dataframe.iterrows():
+    # Insert the data into the database
+    insert_query = "INSERT INTO hourly_weather_data (timestamp, temperature_2m, relative_humidity_2m, rain, snowfall) VALUES (%s, %s, %s, %s, %s)"
+    values = (row["date"], row["temperature_2m"], row["relative_humidity_2m"], row["rain"], row["snowfall"])
+    cursor.execute(insert_query, values)
 
 logging.info("Inserted data into database")
 

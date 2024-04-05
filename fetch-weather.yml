@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: troia-web-app-job
+spec:
+  template:
+    metadata:
+      labels:
+        app: troia-web-app
+    spec:
+      containers:
+      - name: troia-web-app
+        image: janezmk/troia-web-app:latest
+        imagePullPolicy: Always
+      restartPolicy: Never
+  backoffLimit: 4

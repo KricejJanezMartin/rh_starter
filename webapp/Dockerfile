@@ -16,8 +16,20 @@ ADD . /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir flask mysql-connector-python
 
+# copy every content from the local file to the image
+COPY . /app
+
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
 # Run app.py when the container launches
 CMD ["python", "app.py"]
+
+# Build the Docker image
+#docker build -t front-weather-app .
+
+# Tag the image
+#docker tag front-weather-app:latest docker.io/janezmk/troia-front-webapp:latest
+
+# Push the image to the Docker registry
+#docker push docker.io/janezmk/troia-front-webapp:latest

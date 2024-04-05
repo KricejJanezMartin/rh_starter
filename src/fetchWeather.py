@@ -1,5 +1,5 @@
 import openmeteo_requests
-
+import os
 import requests_cache
 import pandas as pd
 from retry_requests import retry
@@ -65,12 +65,15 @@ logging.info("Starting DB write")
 
 # Create a connection to the database
 db = mysql.connector.connect(
-  host="localhost",  # replace with your MySQL container's IP
-  user="yourusername",
-  password="yourpassword",
-  database="yourdatabase"
+  host=os.getenv("DB_HOST"),  # replace with your MySQL container's IP
+  user=os.getenv("DB_USER"),
+  password=os.getenv("DB_PASSWORD"),
+  database=os.getenv("DB_NAME")
 )
+
+
 logging.info("Connected to database")
+
 
 cursor = db.cursor()
 

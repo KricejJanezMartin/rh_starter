@@ -20,6 +20,12 @@ FROM python:3.10-slim-bullseye as runtime
 
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
+# Set environment variables
+ENV DB_HOST=10.217.4.154
+ENV DB_USER=root
+ENV DB_PASSWORD=hcQXGBcDSWAx3N0J
+ENV DB_NAME=weather_data
+    
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 

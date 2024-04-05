@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Data</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Temperature 2m</th>
+            <th>Relative Humidity 2m</th>
+            <th>Rain</th>
+            <th>Snowfall</th>
+            <th>Timestamp</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.temperature_2m }}</td>
+            <td>{{ row.relative_humidity_2m }}</td>
+            <td>{{ row.rain }}</td>
+            <td>{{ row.snowfall }}</td>
+            <td>{{ row.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

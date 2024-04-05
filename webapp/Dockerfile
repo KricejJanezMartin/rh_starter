@@ -2,7 +2,7 @@
 FROM python:3.7-slim
 
 # Set environment variables
-ENV DB_HOST=10.217.4.154
+ENV DB_HOST=mysql
 ENV DB_USER=root
 ENV DB_PASSWORD=hcQXGBcDSWAx3N0J
 ENV DB_NAME=weather_data

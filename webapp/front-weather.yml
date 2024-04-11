@@ -18,5 +18,12 @@ spec:
       - name: troia-front-webapp
         image: docker.io/janezmk/troia-front-webapp:latest
         imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
         ports:
         - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: db-config

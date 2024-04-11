@@ -12,5 +12,8 @@ spec:
       - name: troia-web-app
         image: janezmk/troia-web-app:latest
         imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: db-config
       restartPolicy: Never
   backoffLimit: 4

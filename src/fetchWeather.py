@@ -83,11 +83,32 @@ db = mysql.connector.connect(
 )
 logging.info("Connected to database")
 cursor = db.cursor()
+
+# Check if the table exists
+cursor.execute("SHOW TABLES LIKE 'hourly_weather_data'")
+result = cursor.fetchone()
+
+# If the table doesn't exist, create it
+if not result:
+    create_table_query = """
+    CREATE TABLE hourly_weather_data (
+        timestamp TIMESTAMP,
+        temperature_2m FLOAT,
+        relative_humidity_2m FLOAT,
+        rain FLOAT,
+        snowfall FLOAT
+    )
+    """
+    cursor.execute(create_table_query)
+
 # Assuming your DataFrame is named df
 for index, row in hourly_dataframe.iterrows():
+    # Convert the date to a string format that MySQL can understand
+    date_str = row["date"].strftime("%Y-%m-%d %H:%M:%S")
+
     # Insert the data into the database
     insert_query = "INSERT INTO hourly_weather_data (timestamp, temperature_2m, relative_humidity_2m, rain, snowfall) VALUES (%s, %s, %s, %s, %s)"
-    values = (row["date"], row["temperature_2m"], row["relative_humidity_2m"], row["rain"], row["snowfall"])
+    values = (date_str, row["temperature_2m"], row["relative_humidity_2m"], row["rain"], row["snowfall"])
     cursor.execute(insert_query, values)
 
 logging.info("Inserted data into database")

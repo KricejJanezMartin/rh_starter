@@ -8,7 +8,6 @@ __pycache__/
 
 # Poetry
 /poetry.lock
-/pyproject.toml
 
 # Virtualenv
 *.venv

@@ -45,9 +45,9 @@ spec:
 
 ## Web Service
 
-The web service is a Flask application that queries the MySQL database and displays the data. It's also packaged into a Docker image, named `docker.io/janezmk/troia-front-webapp:latest`.
+The web service is a Flask application that queries the MySQL database and displays the data. Docker image location: `docker.io/janezmk/troia-front-webapp:latest`.
 
-This component is deployed as a Kubernetes Deployment, ensuring that the web service is always running and available. The deployment configuration is defined in the `troia-front-webapp-deployment.yml` file.
+This component is deployed as a Kubernetes Deployment. The deployment configuration is defined in the `webapp/front-weather.yml` file.
 
 ```yaml 
 apiVersion: apps/v1
@@ -112,7 +112,13 @@ spec:
 5. Expose the Service with command:
 
     ```bash
-    kubectl apply -f webapp/service.yaml
+    kubectl apply -f webapp/service.yml
     ```
 
-With these steps, you should have a running MySQL database, a Job that fetches weather data and stores it in the database, and a Service that presents the weather data.
+6. Expose the port so you can access service locally `http://localhost:8080`: 
+
+    ```bash
+    kubectl port-forward service/troia-front-webapp-service 8080:80
+    ```
+
+With these steps, you should have a running MySQL database, a Job that fetches the weather data and a simple webservice to display the fetched data from MySQL DB.

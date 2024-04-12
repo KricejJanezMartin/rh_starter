@@ -1,32 +1,49 @@
-# Use an official Python runtime as a parent image
-FROM python:3.7-slim
+# The builder image, used to build the virtual environment
+FROM python:3.10-buster as builder
+
+RUN pip install poetry==1.7.1
+
+ENV POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=1 \
+    POETRY_VIRTUALENVS_CREATE=1 \
+    POETRY_CACHE_DIR=/tmp/poetry_cache
+
+WORKDIR /app
+
+COPY pyproject.toml poetry.lock ./
+RUN touch README.md
+
+# Add Gunicorn to your dependencies
+RUN poetry add gunicorn
+
+RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR
+
+# The runtime image, used to just run the code provided its virtual environment
+FROM python:3.10-slim-bullseye as runtime
+
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH" \
+    FLASK_ENV=production
 
 # Set environment variables
 ENV DB_HOST=mysql
 ENV DB_USER=root
 ENV DB_PASSWORD=hcQXGBcDSWAx3N0J
 ENV DB_NAME=weather_data
-    
-# Set the working directory in the container to /app
-WORKDIR /app
 
-# Add the current directory contents into the container at /app
-ADD . /app
+COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir flask mysql-connector-python
-
-# copy every content from the local file to the image
 COPY . /app
 
-# Make port 5000 available to the world outside this container
+WORKDIR /app
+
 EXPOSE 5000
 
-# Run app.py when the container launches
-CMD ["python", "app.py"]
+# Use Gunicorn to start your application
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
 
 # Build the Docker image
-#docker build -t front-weather-app .
+#docker build -f webapp/Dockerfile .
 
 # Tag the image
 #docker tag front-weather-app:latest docker.io/janezmk/troia-front-webapp:latest

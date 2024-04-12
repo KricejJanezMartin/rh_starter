@@ -12,8 +12,6 @@ Before you can run this project, you need to have the following installed:
 
 - [OpenShift Local](https://www.redhat.com/sysadmin/install-openshift-local)
 - MySQL Database from the OpenShift app store. After installing OpenShift Local, you can deploy the default MySQL database from the OpenShift app store.
-- Use the following command for the creation of database:
-    ```oc new-app --name=mydatabase mysql-persistent -p MYSQL_USER=myuser -p MYSQL_PASSWORD=mypassword -p MYSQL_DATABASE=weather_data"```
 
 ## Weather Fetcher
 

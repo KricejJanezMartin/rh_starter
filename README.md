@@ -126,7 +126,7 @@ spec:
 ## Deployment CLI
 
 
-1. Database deployment as mentioned earlier.
+1. Database deployment.
     ```bash
     oc new-app --name=mydatabase mysql-persistent -p MYSQL_USER=myuser -p MYSQL_PASSWORD=mypassword -p MYSQL_DATABASE=weather_data
     ```

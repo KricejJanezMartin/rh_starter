@@ -120,7 +120,7 @@ spec:
   ```bash 
   kubectl port-forward service/rh-starter-webservice 8080:5000 
   ```
-  - Service is now avaliable on the URL  `http://localhost:8080/`
+  - Webservice of fetched data is now avaliable on the URL  `http://localhost:8080/`
 
 
 ## Deployment CLI

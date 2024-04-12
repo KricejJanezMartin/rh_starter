@@ -22,8 +22,7 @@ RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR
 FROM python:3.10-slim-bullseye as runtime
 
 ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH" \
-    FLASK_ENV=production
+    PATH="/app/.venv/bin:$PATH"
 
 # Set environment variables
 ENV DB_HOST=mysql
@@ -33,7 +32,7 @@ ENV DB_NAME=weather_data
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
-COPY . /app
+COPY webapp /app
 
 WORKDIR /app
 

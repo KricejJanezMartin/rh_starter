@@ -19,7 +19,7 @@ spec:
         image: docker.io/janezmk/troia-front-webapp:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 5000
+        - containerPort: 5000   
         envFrom:
         - configMapRef:
             name: db-config

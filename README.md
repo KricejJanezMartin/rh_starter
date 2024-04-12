@@ -117,9 +117,9 @@ spec:
 
 9. After succesfull deployment of the Webservice open up CMD console and expose the service with the following command:
   - be sure to login with oc login and choose the corect project.
-  -     ```bash
-    kubectl port-forward service/rh-starter-webservice 8080:5000
-          ```
+  ```bash 
+  kubectl port-forward service/rh-starter-webservice 8080:5000 
+  ```
   - Service is now avaliable on the URL  `http://localhost:8080/`
 
 

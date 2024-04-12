@@ -79,7 +79,51 @@ spec:
             name: db-config
 ```
 
-## Deployment
+## Deployment using GUI
+
+1. After sucessfully deploying Openshift Cluster your first choose new project and name it
+
+2. After naming it you navigate to the left sidebar and choose the `Add+`
+
+3. Then you proceede to choose the Developer Catalog and choose the MySQL database
+ - Set the properties `MySQL Connection Username`, `MySQL Connection Password `, `MySQL root user Password `, `MySQL Database Name `
+   - Note that these values must be REMEBERED for creating configmap later
+
+4. Before deploying our apps we must create a configmap for the database infromation:
+  - navigate to the left sidebar and choose `ConfigMaps`
+  - On the top right corner choose `Create ConfigMap` - name it `db-config`
+  - Fill in the Key value pairs for `DB_HOST`-default should be `mysql`,
+   - `DB_NAME`, `DB_PASSWORD`, `DB_USER` - same as in step 3
+  - Proceed with saving the ConfigMap
+
+
+5. After the deployment of MySQL DB. Click again on the left sidebar and choose `Add +`.
+
+6. This time choose the IMPORT from Git and paste in the HTTP address of this Github repository [link](https://github.com/KricejJanezMartin/rh_starter.git)
+
+7. On the next window the OpenShift will autoimport the name which you can change. 
+  - Under Deploy section choose `Show advanced deployment options`
+  - There you will proceed to fill out the values of the ConfigMap for each of the properties:
+    - `DB_HOST`, `DB_NAME`, `DB_PASSWORD`, `DB_USER`
+  - After that you will deploy the app
+
+8. Then you will repeat the step of importing from Git one more time.
+  - This time we will deploy another Dockerfile which is inside the folder /webapp
+  - Under Dockerfile on the right side choose `Edit import strategy`
+  - Specify different Dockerfile path : `webapp/Dockerfile`
+  - This will change the Dockerfile which we build.
+  - After that scroll down to the `Advanced option section`
+  - And set the Target port to 5000
+
+9. After succesfull deployment of the Webservice open up CMD console and expose the service with the following command:
+  - be sure to login with oc login and choose the corect project.
+  -     ```bash
+    kubectl port-forward service/rh-starter-webservice 8080:5000
+          ```
+  - Service is now avaliable on the URL  `http://localhost:8080/`
+
+
+## Deployment CLI
 
 
 1. Database deployment as mentioned earlier.
